@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitarocks</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #151515;
+            color: white;
+            font-size: 14vw;
+            font-family: Arial, sans-serif;
+        }
+        #countdown {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">Loading...</div>
+
+    <script>
+        function startCountdown(targetTimestamp) {
+            function updateCountdown() {
+                const now = Math.floor(Date.now() / 1000);
+                const timeRemaining = targetTimestamp - now;
+
+                if (timeRemaining <= 0) {
+                    document.getElementById('countdown').textContent = 'OH YEAH!';
+                    clearInterval(timer);
+                    return;
+                }
+
+                const days = Math.floor(timeRemaining / (24 * 60 * 60));
+                const hours = Math.floor((timeRemaining % (24 * 60 * 60)) / 3600);
+                const minutes = Math.floor((timeRemaining % 3600) / 60);
+                const seconds = timeRemaining % 60;
+
+                let numList = [days, hours, minutes, seconds]
+                let visableList = []
+                let k = 0
+                for (let i = 0; i < numList.length; i++) {
+                    if (numList[i] != 0) {
+                        k = i
+                        break
+                    }
+                }
+                for (let i = k; i < numList.length; i++) {
+                    visableList.push(numList[i])
+                }
+
+                document.getElementById('countdown').textContent = visableList.join(" ")
+            }
+
+            updateCountdown();
+            const timer = setInterval(updateCountdown, 1000);
+        }
+
+        const targetTimestamp = 1802102400;
+        startCountdown(targetTimestamp);
+    </script>
+</body>
+</html>
